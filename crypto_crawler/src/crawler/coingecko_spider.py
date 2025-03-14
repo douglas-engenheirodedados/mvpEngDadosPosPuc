@@ -5,17 +5,23 @@ import json
 import time
 from datetime import datetime
 from pathlib import Path
+from typing import Dict, List, Optional
 
 load_dotenv()
 
-class CoinGeckoRealTimeSpider:
+class CoinGeckoSpider:
     def __init__(self):
         self.base_url = "https://api.coingecko.com/api/v3"
+        self.headers = {
+            'Accept': 'application/json'
+        }
         self.api_key = os.getenv('COINGECKO_API_KEY')
         if not self.api_key:
             raise ValueError("API key não encontrada. Verifique seu arquivo .env")
         self.output_dir = Path("data/historical")
+        self.realtime_dir = Path("data/realtime")
         self.output_dir.mkdir(parents=True, exist_ok=True)
+        self.realtime_dir.mkdir(parents=True, exist_ok=True)
 
     def check_historical_data(self):
         """Verifica se existem dados históricos na pasta"""
@@ -25,7 +31,7 @@ class CoinGeckoRealTimeSpider:
     def get_latest_data_date(self):
         """Obtém a data mais recente dos dados históricos"""
         files = list(self.output_dir.glob('bitcoin_historical_*.json'))
-        latest_date = datetime(2013, 1, 1)  # Data inicial padrão
+        latest_date = datetime(2013, 1, 1)
         
         for file in files:
             with open(file, 'r') as f:
@@ -65,42 +71,39 @@ class CoinGeckoRealTimeSpider:
             return None
 
     def save_realtime_data(self, data):
-        """Salva os dados em tempo real"""
+        """Salva os dados em tempo real em arquivos individuais por minuto"""
         if not data:
             return
 
         timestamp = datetime.now()
         formatted_data = {
-            'date': timestamp.strftime('%Y-%m-%d %H:%M:%S'),
-            'price': data['bitcoin']['usd'],
-            'market_cap': data['bitcoin'].get('usd_market_cap'),
-            'volume': data['bitcoin'].get('usd_24h_vol'),
-            'change_24h': data['bitcoin'].get('usd_24h_change')
+            'metadata': {
+                'coin': 'bitcoin',
+                'source': 'CoinGecko API',
+                'timestamp': timestamp.strftime('%Y-%m-%d %H:%M:%S'),
+                'created_at': timestamp.strftime('%Y-%m-%d %H:%M:%S')
+            },
+            'data': {
+                'price': data['bitcoin']['usd'],
+                'market_cap': data['bitcoin'].get('usd_market_cap'),
+                'volume': data['bitcoin'].get('usd_24h_vol'),
+                'change_24h': data['bitcoin'].get('usd_24h_change'),
+                'source': 'coingecko'
+            }
         }
 
-        # Cria arquivo do mês atual se não existir
-        current_month = timestamp.strftime('%Y_%m')
-        filename = self.output_dir / f"bitcoin_realtime_{current_month}.json"
+        # Cria estrutura de diretórios por ano/mês/dia
+        year_dir = self.realtime_dir / timestamp.strftime('%Y')
+        month_dir = year_dir / timestamp.strftime('%m')
+        day_dir = month_dir / timestamp.strftime('%d')
+        day_dir.mkdir(parents=True, exist_ok=True)
+
+        # Nome do arquivo com timestamp completo
+        filename = day_dir / f"bitcoin_realtime_{timestamp.strftime('%Y%m%d_%H%M%S')}.json"
 
         try:
-            if filename.exists():
-                with open(filename, 'r') as f:
-                    file_data = json.load(f)
-            else:
-                file_data = {
-                    'metadata': {
-                        'coin': 'bitcoin',
-                        'source': 'CoinGecko API',
-                        'month': current_month
-                    },
-                    'data': []
-                }
-
-            file_data['data'].append(formatted_data)
-            
             with open(filename, 'w') as f:
-                json.dump(file_data, f, indent=4)
-                
+                json.dump(formatted_data, f, indent=4)
             print(f"Dados salvos em: {filename}")
 
         except Exception as e:
@@ -127,3 +130,49 @@ class CoinGeckoRealTimeSpider:
                 time.sleep(interval)
         except KeyboardInterrupt:
             print("\nColeta interrompida pelo usuário.")
+
+    def get_current_price(self, coins: List[str], vs_currencies: List[str]) -> Dict:
+        """
+        Get current price for multiple cryptocurrencies
+        
+        Args:
+            coins: List of coin ids (e.g., ['bitcoin', 'ethereum'])
+            vs_currencies: List of currencies (e.g., ['usd', 'eur'])
+        """
+        endpoint = f"{self.base_url}/simple/price"
+        params = {
+            'ids': ','.join(coins),
+            'vs_currencies': ','.join(vs_currencies)
+        }
+        
+        try:
+            response = requests.get(endpoint, params=params, headers=self.headers)
+            response.raise_for_status()
+            return response.json()
+        except requests.exceptions.RequestException as e:
+            print(f"Error fetching prices: {e}")
+            return {}
+
+    def get_coin_market_data(self, coin_id: str) -> Dict:
+        """
+        Get detailed market data for a specific coin
+        
+        Args:
+            coin_id: Coin identifier (e.g., 'bitcoin')
+        """
+        endpoint = f"{self.base_url}/coins/{coin_id}"
+        params = {
+            'localization': False,
+            'tickers': True,
+            'market_data': True,
+            'community_data': False,
+            'developer_data': False
+        }
+        
+        try:
+            response = requests.get(endpoint, params=params, headers=self.headers)
+            response.raise_for_status()
+            return response.json()
+        except requests.exceptions.RequestException as e:
+            print(f"Error fetching market data: {e}")
+            return {}
