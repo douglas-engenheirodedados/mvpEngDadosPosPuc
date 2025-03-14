@@ -169,3 +169,15 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+# Pasta de dados
+data/
+data/historical/
+data/realtime/
+
+# IDEs
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
