@@ -1,0 +1,15 @@
+{
+    "metadata": {
+        "coin": "bitcoin",
+        "source": "CoinGecko API",
+        "timestamp": "2025-03-14 06:13:28",
+        "created_at": "2025-03-14 06:13:28"
+    },
+    "data": {
+        "price": 82703,
+        "market_cap": 1640556062975.317,
+        "volume": 28438519793.890907,
+        "change_24h": -0.4606515134231122,
+        "source": "coingecko"
+    }
+}
