@@ -1,5 +1,5 @@
 from crawler.coingecko_spider import CoinGeckoSpider
-from crawler.historical_data import get_crypto_historical_data
+from crawler.historical_data import HistoricalDataCollector
 from datetime import datetime
 import json
 from pathlib import Path
@@ -63,32 +63,30 @@ def save_historical_data(data, symbol):
 
 def main():
     """
-    Função principal que orquestra o fluxo de coleta de dados.
-    Gerencia tanto a coleta histórica quanto em tempo real.
+    Função principal que gerencia a coleta de dados para múltiplas criptomoedas.
     """
-    symbol = 'bitcoin'
+    # Lista de criptomoedas para monitorar
+    cryptocurrencies = ['bitcoin', 'ethereum']
     
-    # Verifica necessidade de coleta histórica
-    if not check_historical_data_exists(symbol):
-        print("Dados históricos não encontrados. Iniciando coleta histórica desde 2014...")
-        historical_data = get_crypto_historical_data(
-            symbol='BTC-USD',
-            interval='1d'
-        )
+    # Inicializa coletores
+    historical_collector = HistoricalDataCollector()
+    
+    # Coleta dados históricos para cada criptomoeda
+    for crypto in cryptocurrencies:
+        print(f"\nProcessando dados históricos de {crypto}...")
         
-        # Salva dados históricos se coletados com sucesso
+        # Coleta e salva dados históricos
+        historical_data = historical_collector.get_crypto_historical_data(crypto)
         if not historical_data.empty:
-            save_historical_data(historical_data, symbol)
+            historical_collector.save_historical_data(historical_data, crypto)
         else:
-            print("Erro: Não foi possível coletar dados históricos!")
-            return
-    else:
-        print("Dados históricos já existem. Pulando coleta histórica.")
+            print(f"Erro: Não foi possível coletar dados históricos de {crypto}!")
+            continue
     
-    # Inicia coleta em tempo real
+    # Inicia coleta em tempo real para todas as criptomoedas
     print("\nIniciando coleta de dados em tempo real...")
-    spider = CoinGeckoSpider()
-    spider.run(interval=60)  # Coleta a cada 60 segundos
+    spider = CoinGeckoSpider(cryptocurrencies)
+    spider.run(interval=60)
 
 if __name__ == "__main__":
     main() 
