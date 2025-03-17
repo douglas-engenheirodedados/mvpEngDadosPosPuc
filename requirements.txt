@@ -1,3 +1,5 @@
 requests
 python-dotenv
 yfinance
+boto3
+pandas
