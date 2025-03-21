@@ -7,19 +7,19 @@ import os
 
 # Configurações
 ASSETS = ['bitcoin', 'ethereum', 'cardano']  # Adicione outros ativos
-# S3_BUCKET = '01.landing'  # Comentado para salvar localmente
-# S3_FOLDER = 'crypto/prices/'  # Pasta dentro do bucket (opcional) - Comentado
+S3_BUCKET = '01.landing'  # Comentado para salvar localmente
+S3_FOLDER = 'crypto/prices/'  # Pasta dentro do bucket (opcional) - Comentado
 AWS_REGION = 'us-east-2'  # Ajuste para sua região se necessário
 
 # Carregue a chave de API do ambiente
 COINGECKO_API_KEY = os.getenv("COINGECKO_API_KEY")
 
-# Cria a pasta 'data' se não existir
-if not os.path.exists('data'):
-    os.makedirs('data')
+# # Cria a pasta 'data' se não existir
+# if not os.path.exists('data'):
+#     os.makedirs('data')
 
 def fetch_and_upload():
-    # s3_client = boto3.client('s3', region_name=AWS_REGION)  # Comentado para não usar S3
+    s3_client = boto3.client('s3', region_name=AWS_REGION)  # Comentado para não usar S3
 
     # Calcula a data do dia anterior
     yesterday = datetime.now(timezone.utc) - timedelta(days=1)
@@ -63,20 +63,35 @@ def fetch_and_upload():
                     }
                     json_data.append(price_info)
 
+            # Adiciona metadados
+            metadata = {
+                'extraction_date': datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S'),
+                'source': 'CoinGecko',
+                'assets': asset,
+                'time_interval': f"{start_time.strftime('%Y-%m-%d %H:%M:%S')} to {end_time.strftime('%Y-%m-%d %H:%M:%S')}",
+                'total_records': len(json_data)
+            }
+
+            # Combina metadados e dados
+            output_data = {
+                'metadata': metadata,
+                'data': json_data
+            }
+
             # Define o nome do arquivo
-            file_name = f"data/{asset}_daily_{date_str}.json"  # Salva na pasta 'data'
+            file_name = f"cripto/{asset}_daily_{date_str}.json"  # Salva na pasta 'data'
 
             # Salva o arquivo localmente
-            with open(file_name, 'w') as json_file:
-                json.dump(json_data, json_file, indent=4)  # Converte os dados para JSON e salva com indentação
+            # with open(file_name, 'w') as json_file:
+            #     json.dump(json_data, json_file, indent=4)  # Converte os dados para JSON e salva com indentação
 
             # Comentado: Faz upload para S3
-            # s3_client.put_object(
-            #     Bucket=S3_BUCKET,
-            #     Key=file_name,
-            #     Body=json.dumps(json_data),  # Converte os dados para JSON
-            #     ContentType='application/json'  # Define o tipo de conteúdo como JSON
-            # )
+            s3_client.put_object(
+                Bucket=S3_BUCKET,
+                Key=file_name,
+                Body=json.dumps(output_data),  # Converte os dados para JSON
+                ContentType='application/json'  # Define o tipo de conteúdo como JSON
+            )
             print(f"Saved {file_name} locally.")
         else:
             print(f"Error fetching {asset}: Status {response.status_code}")
