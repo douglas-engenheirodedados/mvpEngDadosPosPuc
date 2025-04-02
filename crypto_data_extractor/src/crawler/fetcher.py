@@ -20,7 +20,9 @@ ASSET_TICKER_MAP = {
 ASSETS = list(ASSET_TICKER_MAP.keys()) # ['bitcoin', 'ethereum', 'cardano']
 S3_BUCKET = '01.landing'  # Nome do bucket S3
 AWS_REGION = 'us-east-2'  # Ajuste para sua região se necessário
-HISTORICO_DIR = 'historico/'  # Diretório local (não usado para S3 diretamente)
+
+# Use a variável de ambiente para o diretório temporário, com um fallback para execução local
+HISTORICO_DIR = os.getenv('HISTORICO_DIR', '/tmp/historico') # Lê a variável de ambiente, ou usa /tmp/historico como padrão
 
 # Carregue a chave de API do ambiente
 COINGECKO_API_KEY = os.getenv("COINGECKO_API_KEY")
@@ -28,9 +30,14 @@ COINGECKO_API_KEY = os.getenv("COINGECKO_API_KEY")
 # Cria o cliente S3
 s3_client = boto3.client('s3', region_name=AWS_REGION)
 
-# Cria a pasta 'historico' localmente se não existir (pode ser útil para debug)
-if not os.path.exists(HISTORICO_DIR):
-    os.makedirs(HISTORICO_DIR)
+# Cria o diretório temporário se não existir, usando exist_ok=True
+try:
+    os.makedirs(HISTORICO_DIR, exist_ok=True)
+    logging.info(f"Diretório temporário '{HISTORICO_DIR}' assegurado.")
+except OSError as e:
+    logging.error(f"Erro ao criar diretório temporário '{HISTORICO_DIR}': {e}")
+    # Você pode querer levantar o erro ou lidar com ele de outra forma
+    raise e
 
 def check_historical_data_exists(asset_name):
     """Verifica se o arquivo histórico existe no S3 usando o nome do ativo."""
@@ -251,5 +258,24 @@ def fetch_and_upload():
 
     logging.info("Processo fetch_and_upload concluído.")
 
-if __name__ == "__main__":
-    fetch_and_upload()
+def lambda_handler(event, context):
+    """
+    Ponto de entrada para a execução da AWS Lambda.
+    O 'event' e 'context' não são usados neste script, mas são necessários pela Lambda.
+    """
+    logging.info("Execução da Lambda iniciada.")
+    try:
+        fetch_and_upload()
+        logging.info("Execução da Lambda concluída com sucesso.")
+        # Você pode retornar uma resposta de sucesso se necessário
+        return {
+            'statusCode': 200,
+            'body': json.dumps('Processo de extração de dados concluído com sucesso!')
+        }
+    except Exception as e:
+        logging.error(f"Erro durante a execução da Lambda: {e}", exc_info=True)
+        # Retorna uma resposta de erro
+        return {
+            'statusCode': 500,
+            'body': json.dumps(f'Erro no processo de extração: {e}')
+        }
