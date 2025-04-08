@@ -63,10 +63,6 @@ df_raw = (
 
 # COMMAND ----------
 
-df_raw.display()
-
-# COMMAND ----------
-
 # Explodir o array de data
 from pyspark.sql.functions import explode, col, input_file_name
 
@@ -83,10 +79,6 @@ df_transformed = (
         input_file_name().alias("source_file")
     )
 )
-
-# COMMAND ----------
-
-df_transformed.display()
 
 # COMMAND ----------
 
