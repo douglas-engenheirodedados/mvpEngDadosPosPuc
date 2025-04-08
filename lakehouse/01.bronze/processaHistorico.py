@@ -14,16 +14,14 @@ from pyspark.sql.types import StructType, StructField, StringType, TimestampType
 # COMMAND ----------
 
 # DBTITLE 1,Catolog
-# MAGIC %sql
-# MAGIC create catalog if not exists lakehouse managed location 's3://databricks-9cwyoqzauqyermnrdpparb-cloud-storage-bucket/unity-catalog/1732645886098685';
-# MAGIC use catalog lakehouse;
+spark.sql("create catalog if not exists lakehouse managed location 's3://databricks-9cwyoqzauqyermnrdpparb-cloud-storage-bucket/unity-catalog/1732645886098685'")
+spark.sql("use catalog lakehouse")
 
 # COMMAND ----------
 
 # DBTITLE 1,Schema & Volume
-# MAGIC %sql
-# MAGIC create schema if not exists bronze;
-# MAGIC create volume if not exists bronze.checkpoint_historico_cripto;
+spark.sql("create schema if not exists bronze")
+spark.sql("create volume if not exists bronze.checkpoint_historico_cripto")
 
 # COMMAND ----------
 
