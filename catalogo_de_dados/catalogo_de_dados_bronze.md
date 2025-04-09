@@ -40,8 +40,10 @@ Tabela contendo os preços intradiários (de hora em hora) de criptoativos, cole
 
 ### Origem:
 - `bronze_historico` → Arquivos JSON de histórico em `landing/historico/{ativo}.json`
+![Linhagem JSON para Bronze - Histórico](https://github.com/douglas-engenheirodedados/mvpEngDadosPosPuc/blob/5809fb9c527efb68481f8ccdb4fb7b5a15127c4d/docs/images/linhagem-json-bronze-historico.png?raw=true)
 
-- `bronze_intradiario` → Arquivos JSON diários em `landing/cripto/{ativo}/YYYY-MM-DD.json`
+- `bronze_diario` → Arquivos JSON diários em `landing/cripto/{ativo}/YYYY-MM-DD.json`
+![Linhagem JSON para Bronze - Diário](https://github.com/douglas-engenheirodedados/mvpEngDadosPosPuc/blob/5809fb9c527efb68481f8ccdb4fb7b5a15127c4d/docs/images/linhagem-json-bronze-diario.png?raw=true)
 
 ### Transformação:
 - Explosão do campo `data` para linhas
