@@ -3,6 +3,7 @@
 # MAGIC
 # MAGIC ## Objetivo: Esse notebook faz o processamento dos dados históricos que se encontram na camada landing
 # MAGIC
+# MAGIC ![Arquiteture de Ingestão Landing - Bronze](https://github.com/douglas-engenheirodedados/mvpEngDadosPosPuc/blob/529cc4ab58fa85f2476028b240bed918eb465830/docs/images/arquiterura-ingestao.png?raw=true)
 # MAGIC
 
 # COMMAND ----------
