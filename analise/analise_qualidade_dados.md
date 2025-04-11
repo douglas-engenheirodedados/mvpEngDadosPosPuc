@@ -30,6 +30,9 @@ Foram definidas regras de domínio para atributos numéricos, como:
 ### ✅ 4. Cobertura temporal
 
 Foi verificado se cada ativo possui registros diários contínuos desde sua primeira aparição. A análise identificou que alguns ativos possuem janelas com lacunas, especialmente nos primeiros dias após serem inseridos. Isso é esperado devido ao delay natural da primeira coleta e não compromete as análises futuras.
+Foi também analisado o número de registros totais diários, que deve ser 24 por cada ativo, uma para cada hora.
+
+![](https://github.com/douglas-engenheirodedados/mvpEngDadosPosPuc/blob/1038ecefad30552b44bf80ddbfdcd89ea54a354c/docs/images/4.%20Distribui%C3%A7%C3%A3o%20de%20registros%20por%20data.png?raw=true)
 
 ### ✅ 5. Estatísticas básicas por atributo numérico
 
@@ -39,7 +42,7 @@ Nesta análise, buscamos entender a distribuição básica dos principais atribu
 - Número de ativos distintos presentes no dataset;
 - Preço mínimo e máximo observado entre todos os registros.
 
-
+![](https://github.com/douglas-engenheirodedados/mvpEngDadosPosPuc/blob/1038ecefad30552b44bf80ddbfdcd89ea54a354c/docs/images/5.%20Estat%C3%ADsticas%20b%C3%A1sicas%20por%20atributo%20num%C3%A9rico.png?raw=true)
 
 Essas métricas ajudam a identificar valores extremos (outliers), possíveis erros de coleta (ex: preços zerados ou negativos) e a diversidade de ativos processados. São fundamentais para contextualizar os dados e garantir que as análises posteriores estejam baseadas em um conjunto consistente e coerente.
 
