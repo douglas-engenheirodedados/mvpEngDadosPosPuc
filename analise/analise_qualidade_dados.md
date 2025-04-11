@@ -11,19 +11,21 @@ A análise de qualidade dos dados é uma etapa fundamental para garantir que os 
 
 Foi realizada uma verificação de valores nulos nas principais colunas da tabela Silver (como `asset_name`, `symbol`, `timestamp`, `price`, `market_cap`, entre outras). O resultado demonstrou que **não há valores nulos** em atributos obrigatórios para as análises.
 
+![](https://github.com/douglas-engenheirodedados/mvpEngDadosPosPuc/blob/df46ffcac063da8b36748b0330bd0cd13da32da4/docs/images/1.%20Verifica%C3%A7%C3%A3o%20de%20valores%20nulos%20ou%20ausentes.png?raw=true)
+
 ### ✅ 2. Duplicatas
 
 As tabelas de origem seguem um padrão `insertOnly`, o que reduz o risco de duplicações. Ainda assim, foram aplicadas verificações para confirmar a ausência de registros duplicados (mesma combinação de `asset_name` + `timestamp`). Nenhuma duplicação foi identificada.
+
+![](https://github.com/douglas-engenheirodedados/mvpEngDadosPosPuc/blob/df46ffcac063da8b36748b0330bd0cd13da32da4/docs/images/2.%20Verifica%C3%A7%C3%A3o%20de%20duplicidade%20de%20registros.png?raw=true)
 
 ### ✅ 3. Valores fora do domínio esperado
 
 Foram definidas regras de domínio para atributos numéricos, como:
 
 - `price` ≥ 0
-- `market_cap` ≥ 0
-- `total_volume` ≥ 0
 
-Foram encontrados alguns registros com valores muito próximos de zero em `market_cap` e `total_volume`, especialmente em ativos recém-listados. Esses registros foram mantidos por estarem de acordo com o comportamento real de mercado.
+![](https://github.com/douglas-engenheirodedados/mvpEngDadosPosPuc/blob/df46ffcac063da8b36748b0330bd0cd13da32da4/docs/images/3.%20Verifica%C3%A7%C3%A3o%20de%20valores%20fora%20do%20dom%C3%ADnio%20esperado.png?raw=true)
 
 ### ✅ 4. Cobertura temporal
 
@@ -36,6 +38,8 @@ Nesta análise, buscamos entender a distribuição básica dos principais atribu
 - Quantidade total de registros;
 - Número de ativos distintos presentes no dataset;
 - Preço mínimo e máximo observado entre todos os registros.
+
+
 
 Essas métricas ajudam a identificar valores extremos (outliers), possíveis erros de coleta (ex: preços zerados ou negativos) e a diversidade de ativos processados. São fundamentais para contextualizar os dados e garantir que as análises posteriores estejam baseadas em um conjunto consistente e coerente.
 
