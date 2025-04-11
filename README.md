@@ -30,13 +30,23 @@ Inicialmente, o foco estará na construção da infraestrutura de coleta, modela
 ---
 
 ## 🔧 Tecnologias Utilizadas
+AWS Lambda – Coleta automatizada diária
 
-- **AWS Lambda** – Coleta automatizada diária
-- **AWS S3** – Armazenamento de dados brutos
-- **AWS Glue** – ETL, transformação e catálogo de dados
-- **AWS Athena** – Consulta e análise via SQL
-- **Python** – `requests`, `pandas`, entre outras
-- **CoinGecko API** – Fonte dos dados de criptoativos
+AWS S3 – Armazenamento de dados brutos
+
+Databricks – Plataforma principal para processamento de dados, incluindo:
+
+Delta Lake – Armazenamento e versionamento de dados
+
+Autoloader – Ingestão automática de dados
+
+Structured Streaming – Processamento de dados em tempo real
+
+Unity Catalog – Governança e catálogo de dados
+
+Python – requests, pandas, entre outras bibliotecas
+
+CoinGecko API – Fonte dos dados de criptoativos
 
 ---
 
@@ -44,13 +54,34 @@ Inicialmente, o foco estará na construção da infraestrutura de coleta, modela
 
 ```plaintext
 .
+├── analise/                # Notebooks e documentos de análise de dados
+│   ├── analise_qualidade_dados.md
+│   ├── analise_qualidade_silver.ipynb
+│   └── discussao_resultado.md
+├── avaliacao/              # Autoavaliação e materiais relacionados
+│   └── autoavaliacao.md
+├── catalogo_de_dados/      # Catálogo de dados com descrição dos campos e domínios
+│   ├── catalogo_de_dados_bronze.md
+│   └── catalogo_de_dados_silver.md.ipynb
 ├── crypto_data_extractor/  # Código da função Lambda para coleta dos dados
-├── glue/                   # Scripts ETL utilizados no Glue
-├── notebooks/              # Notebooks de exploração e análise
-├── docs/                   # Evidências (prints e vídeos)
-├── README.md               # Este arquivo
-├── objetivo.md             # Documento detalhado com o objetivo do projeto
-└── catalogo_de_dados.md    # Catálogo de dados com descrição dos campos e domínios
+│   ├── lambda_layer
+│   │   └── lambda_dependencies_layer.zip
+│   ├── src
+│   │   ├── crawler
+│   │   │   └── fetcher.py
+│   │   └── __init__.py 
+│   ├── lambda_function_code.zip
+│   └── requirements.txt 
+├── docs/                   # prints
+├── lakehouse/              # Notebooks e scripts relacionados ao Databricks
+│   ├── 01.bronze
+│   │   ├── processaDiario.ipynb
+│   │   └── processaHistorico.ipynb
+│   ├── 02.silver
+│   │   └── processamentoDominioCripto.ipynb
+│   └── 03.gold
+│       └── visoesDominioCripto.ipynb
+└── README.md               # Este arquivo
 ```
 
 ---
@@ -95,14 +126,21 @@ Este projeto utiliza dados públicos disponibilizados pela [CoinGecko API](https
 
 ## ✅ Checklist para Entrega
 
-- [x] Objetivo e perguntas de negócio definidos
-- [x] Coleta automática implementada
-- [ ] Modelagem e catálogo de dados
-- [ ] ETL com AWS Glue
-- [ ] Análise de dados (qualidade + solução)
-- [ ] Autoavaliação escrita
-- [ ] Evidências (prints e/ou vídeos) adicionadas em `docs/`
-- [ ] Código hospedado em repositório público do GitHub
+✅ Objetivo e perguntas de negócio definidos
+
+✅ Coleta automática implementada
+
+✅ Modelagem e catálogo de dados
+
+✅ Pipeline de dados com Databricks
+
+✅ Análise de dados (qualidade + solução)
+
+✅ Autoavaliação escrita
+
+✅ Evidências (prints e/ou vídeos) adicionadas em docs/
+
+✅ Código hospedado em repositório público do GitHub
 
 ---
 
