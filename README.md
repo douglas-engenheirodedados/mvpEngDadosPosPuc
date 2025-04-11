@@ -31,8 +31,6 @@ Quais as estatísticas básicas dos ativos disponíveis (mínimo, máximo, total
 
 ⚠️ Observação: Esta etapa focou na exploração inicial dos dados com base nas informações coletadas e tratadas. Análises mais avançadas (como predições, agrupamentos ou padrões comportamentais) poderão ser conduzidas futuramente, em disciplinas voltadas para ciência de dados.
 
-> ⚠️ **Observação:** Este trabalho se concentra na construção da fundação de dados (engenharia), sendo a parte de análises preditivas e identificação automatizada de oportunidades explorada futuramente em disciplinas de ciência de dados.
-
 ---
 
 ## 🔧 Tecnologias Utilizadas
@@ -60,24 +58,24 @@ CoinGecko API – Fonte dos dados de criptoativos
 
 ```plaintext
 .
-├── analise/                # Notebooks e documentos de análise de dados
+├── analise/                                 # Notebooks e documentos de análise de dados
 │   ├── analise_qualidade_dados.md           # Documento descritivo da análise de qualidade dos dados
 │   ├── analise_qualidade_silver.ipynb       # Notebook com os códigos utilizados na análise de qualidade
 │   └── discussao_resultado.md               # Discussão dos resultados obtidos com base nas perguntas do projeto
-├── avaliacao/              # Autoavaliação e materiais relacionados
+├── avaliacao/                               # Autoavaliação e materiais relacionados
 │   └── autoavaliacao.md                     # Documento de autoavaliação com reflexões sobre o projeto
-├── catalogo_de_dados/      # Catálogo de dados com descrição dos campos e domínios
+├── catalogo_de_dados/                       # Catálogo de dados com descrição dos campos e domínios
 │   ├── catalogo_de_dados_bronze.md          # Descrição da estrutura de dados na camada Bronze
 │   └── catalogo_de_dados_silver.md.ipynb    # Notebook com descrição detalhada da camada Silver
 ├── crypto_data_extractor/  # Código da função Lambda para coleta dos dados
-│   ├── lambda_layer                          # Pacote com dependências da Lambda em formato .zip
-│   │   └── lambda_dependencies_layer.zip     # Arquivo com bibliotecas utilizadas pela Lambda
-│   ├── src                                   # Código-fonte do extrator
+│   ├── lambda_layer                         # Pacote com dependências da Lambda em formato .zip
+│   │   └── lambda_dependencies_layer.zip    # Arquivo com bibliotecas utilizadas pela Lambda
+│   ├── src                                  # Código-fonte do extrator
 │   │   ├── crawler
-│   │   │   └── fetcher.py                    # Script principal responsável pela extração de dados via API
-│   │   └── __init__.py                       # Inicializador de módulo Python
-│   ├── lambda_function_code.zip              # Código empacotado da função Lambda para deploy
-│   └── requirements.txt                      # Lista de dependências da aplicação
+│   │   │   └── fetcher.py                   # Script principal responsável pela extração de dados via API
+│   │   └── __init__.py                      # Inicializador de módulo Python
+│   ├── lambda_function_code.zip             # Código empacotado da função Lambda para deploy
+│   └── requirements.txt                     # Lista de dependências da aplicação
 ├── docs/                   # Prints de tela e vídeos com evidências de execução
 ├── lakehouse/              # Notebooks e scripts relacionados ao Databricks
 │   ├── 01.bronze                            # Processamento da camada Bronze
@@ -87,7 +85,7 @@ CoinGecko API – Fonte dos dados de criptoativos
 │   │   └── processamentoDominioCripto.ipynb # Unificação de dados em uma tabela Silver para o domínio de criptoativos
 │   └── 03.gold                              # Geração de visões analíticas (Gold)
 │       └── visoesDominioCripto.ipynb        # Visões analíticas sobre os ativos para possíveis análises futuras
-└── README.md               # Este arquivo com a descrição geral do projeto
+└── README.md                                # Este arquivo com a descrição geral do projeto
 
 ```
 
