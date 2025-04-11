@@ -55,33 +55,34 @@ CoinGecko API – Fonte dos dados de criptoativos
 ```plaintext
 .
 ├── analise/                # Notebooks e documentos de análise de dados
-│   ├── analise_qualidade_dados.md
-│   ├── analise_qualidade_silver.ipynb
-│   └── discussao_resultado.md
+│   ├── analise_qualidade_dados.md           # Documento descritivo da análise de qualidade dos dados
+│   ├── analise_qualidade_silver.ipynb       # Notebook com os códigos utilizados na análise de qualidade
+│   └── discussao_resultado.md               # Discussão dos resultados obtidos com base nas perguntas do projeto
 ├── avaliacao/              # Autoavaliação e materiais relacionados
-│   └── autoavaliacao.md
+│   └── autoavaliacao.md                     # Documento de autoavaliação com reflexões sobre o projeto
 ├── catalogo_de_dados/      # Catálogo de dados com descrição dos campos e domínios
-│   ├── catalogo_de_dados_bronze.md
-│   └── catalogo_de_dados_silver.md.ipynb
+│   ├── catalogo_de_dados_bronze.md          # Descrição da estrutura de dados na camada Bronze
+│   └── catalogo_de_dados_silver.md.ipynb    # Notebook com descrição detalhada da camada Silver
 ├── crypto_data_extractor/  # Código da função Lambda para coleta dos dados
-│   ├── lambda_layer
-│   │   └── lambda_dependencies_layer.zip
-│   ├── src
+│   ├── lambda_layer                          # Pacote com dependências da Lambda em formato .zip
+│   │   └── lambda_dependencies_layer.zip     # Arquivo com bibliotecas utilizadas pela Lambda
+│   ├── src                                   # Código-fonte do extrator
 │   │   ├── crawler
-│   │   │   └── fetcher.py
-│   │   └── __init__.py 
-│   ├── lambda_function_code.zip
-│   └── requirements.txt 
-├── docs/                   # prints
+│   │   │   └── fetcher.py                    # Script principal responsável pela extração de dados via API
+│   │   └── __init__.py                       # Inicializador de módulo Python
+│   ├── lambda_function_code.zip              # Código empacotado da função Lambda para deploy
+│   └── requirements.txt                      # Lista de dependências da aplicação
+├── docs/                   # Prints de tela e vídeos com evidências de execução
 ├── lakehouse/              # Notebooks e scripts relacionados ao Databricks
-│   ├── 01.bronze
-│   │   ├── processaDiario.ipynb
-│   │   └── processaHistorico.ipynb
-│   ├── 02.silver
-│   │   └── processamentoDominioCripto.ipynb
-│   └── 03.gold
-│       └── visoesDominioCripto.ipynb
-└── README.md               # Este arquivo
+│   ├── 01.bronze                            # Processamento da camada Bronze
+│   │   ├── processaDiario.ipynb             # Processa dados diários dos criptoativos para Delta Bronze
+│   │   └── processaHistorico.ipynb          # Processa dados históricos dos criptoativos para Delta Bronze
+│   ├── 02.silver                            # Processamento da camada Silver
+│   │   └── processamentoDominioCripto.ipynb # Unificação de dados em uma tabela Silver para o domínio de criptoativos
+│   └── 03.gold                              # Geração de visões analíticas (Gold)
+│       └── visoesDominioCripto.ipynb        # Visões analíticas sobre os ativos para possíveis análises futuras
+└── README.md               # Este arquivo com a descrição geral do projeto
+
 ```
 
 ---
