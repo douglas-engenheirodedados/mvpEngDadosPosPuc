@@ -16,14 +16,20 @@ Inicialmente, o foco estará na construção da infraestrutura de coleta, modela
 
 **Como identificar criptoativos com comportamentos que possam indicar oportunidades de investimento, utilizando dados históricos de preços e volume?**
 
-### ❓ Perguntas que o projeto pretende responder
+### ❓ Perguntas que o projeto respondeu
+Durante a construção do MVP, com os dados organizados e estruturados na arquitetura Lakehouse, foram exploradas as seguintes perguntas de negócio:
 
-1. Quais criptoativos apresentam maior volatilidade nos últimos períodos?
-2. Quais ativos tiveram os maiores crescimentos em curtos intervalos de tempo?
-3. Existe algum padrão de comportamento de preços em determinados dias da semana ou do mês?
-4. É possível identificar agrupamentos (clusters) de ativos com comportamentos semelhantes?
-5. Como o volume de negociação influencia a variação de preços dos ativos?
-6. Como os criptoativos se comportam em relação à fatores externos, como por exemplo, fatos políticos.
+Qual o ativo com maior preço médio no período?
+
+Qual o ativo com maior desvio padrão de preço?
+
+Qual ativo apresentou o maior volume médio negociado?
+
+Existe alguma correlação entre volume negociado e preço médio?
+
+Quais as estatísticas básicas dos ativos disponíveis (mínimo, máximo, total de registros, etc)?
+
+⚠️ Observação: Esta etapa focou na exploração inicial dos dados com base nas informações coletadas e tratadas. Análises mais avançadas (como predições, agrupamentos ou padrões comportamentais) poderão ser conduzidas futuramente, em disciplinas voltadas para ciência de dados.
 
 > ⚠️ **Observação:** Este trabalho se concentra na construção da fundação de dados (engenharia), sendo a parte de análises preditivas e identificação automatizada de oportunidades explorada futuramente em disciplinas de ciência de dados.
 
