@@ -29,6 +29,17 @@ Foram encontrados alguns registros com valores muito próximos de zero em `marke
 
 Foi verificado se cada ativo possui registros diários contínuos desde sua primeira aparição. A análise identificou que alguns ativos possuem janelas com lacunas, especialmente nos primeiros dias após serem inseridos. Isso é esperado devido ao delay natural da primeira coleta e não compromete as análises futuras.
 
+### ✅ 5. Estatísticas básicas por atributo numérico
+
+Nesta análise, buscamos entender a distribuição básica dos principais atributos numéricos presentes na camada Silver. São extraídas informações como:
+
+- Quantidade total de registros;
+- Número de ativos distintos presentes no dataset;
+- Preço mínimo e máximo observado entre todos os registros.
+
+Essas métricas ajudam a identificar valores extremos (outliers), possíveis erros de coleta (ex: preços zerados ou negativos) e a diversidade de ativos processados. São fundamentais para contextualizar os dados e garantir que as análises posteriores estejam baseadas em um conjunto consistente e coerente.
+
+
 ## Conclusão
 
 A análise de qualidade indicou que os dados da camada Silver estão com excelente qualidade. Não foram identificados problemas críticos que comprometam as análises. As poucas anomalias encontradas (valores baixos ou faltas pontuais em ativos novos) são compatíveis com a natureza dos dados de criptoativos.
