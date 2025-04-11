@@ -76,8 +76,8 @@ CoinGecko API – Fonte dos dados de criptoativos
 │   │   └── __init__.py                      # Inicializador de módulo Python
 │   ├── lambda_function_code.zip             # Código empacotado da função Lambda para deploy
 │   └── requirements.txt                     # Lista de dependências da aplicação
-├── docs/                   # Prints de tela e vídeos com evidências de execução
-├── lakehouse/              # Notebooks e scripts relacionados ao Databricks
+├── docs/                                    # Prints de tela e vídeos com evidências de execução
+├── lakehouse/                               # Notebooks e scripts relacionados ao Databricks
 │   ├── 01.bronze                            # Processamento da camada Bronze
 │   │   ├── processaDiario.ipynb             # Processa dados diários dos criptoativos para Delta Bronze
 │   │   └── processaHistorico.ipynb          # Processa dados históricos dos criptoativos para Delta Bronze
